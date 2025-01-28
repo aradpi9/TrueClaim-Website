@@ -61,6 +61,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Testimonial Carousel
+const testimonialSection = document.querySelector('.testimonials');
 const testimonialTrack = document.querySelector('.testimonial-track');
 const testimonials = document.querySelectorAll('.testimonial');
 const prevButton = document.querySelector('.carousel-arrow.prev');
@@ -70,6 +71,7 @@ const dotsContainer = document.querySelector('.carousel-dots');
 let currentIndex = 0;
 const slidesToShow = 2;
 const totalSlides = testimonials.length;
+let isAutoScrolling = false;
 
 // Create dots
 for (let i = 0; i < Math.ceil(totalSlides / slidesToShow); i++) {
@@ -89,20 +91,6 @@ testimonials.forEach(testimonial => {
 let autoScrollInterval;
 const autoScrollDelay = 5000; // 5 seconds
 
-function startAutoScroll() {
-    autoScrollInterval = setInterval(() => {
-        if (currentIndex < totalSlides - slidesToShow) {
-            goToSlide(currentIndex + slidesToShow);
-        } else {
-            goToSlide(0);
-        }
-    }, autoScrollDelay);
-}
-
-function stopAutoScroll() {
-    clearInterval(autoScrollInterval);
-}
-
 function updateDots() {
     const dots = document.querySelectorAll('.dot');
     dots.forEach((dot, index) => {
@@ -110,37 +98,82 @@ function updateDots() {
     });
 }
 
-function goToSlide(index) {
+function goToSlide(index, smooth = true) {
     currentIndex = index;
     const slideWidth = testimonials[0].offsetWidth;
+    const transitionDuration = smooth ? '0.5s' : '0s';
+    testimonialTrack.style.transition = `transform ${transitionDuration} ease`;
     testimonialTrack.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
     updateDots();
 }
 
+function resetToBeginning() {
+    // First, move to the last slide without animation
+    goToSlide(totalSlides - slidesToShow, false);
+    
+    // Wait a brief moment, then smoothly transition to the first slide
+    setTimeout(() => {
+        goToSlide(0, true);
+    }, 50);
+}
+
+function startAutoScroll() {
+    if (autoScrollInterval) return;
+    
+    autoScrollInterval = setInterval(() => {
+        if (currentIndex < totalSlides - slidesToShow) {
+            goToSlide(currentIndex + slidesToShow);
+        } else {
+            resetToBeginning();
+        }
+    }, autoScrollDelay);
+}
+
+function stopAutoScroll() {
+    if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+    }
+}
+
+// Intersection Observer to detect when testimonial section is in view
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !isAutoScrolling) {
+            isAutoScrolling = true;
+            startAutoScroll();
+        } else if (!entry.isIntersecting && isAutoScrolling) {
+            isAutoScrolling = false;
+            stopAutoScroll();
+        }
+    });
+}, {
+    threshold: 0.3 // Start when 30% of the section is visible
+});
+
+observer.observe(testimonialSection);
+
 // Event listeners for manual navigation
 prevButton.addEventListener('click', () => {
+    stopAutoScroll();
     if (currentIndex > 0) {
         goToSlide(currentIndex - slidesToShow);
     }
 });
 
 nextButton.addEventListener('click', () => {
+    stopAutoScroll();
     if (currentIndex < totalSlides - slidesToShow) {
         goToSlide(currentIndex + slidesToShow);
+    } else {
+        resetToBeginning();
     }
 });
 
-// Start auto-scroll
-startAutoScroll();
-
-// Pause auto-scroll on hover
+// Restart auto-scroll after manual navigation
 testimonialTrack.addEventListener('mouseenter', stopAutoScroll);
-testimonialTrack.addEventListener('mouseleave', startAutoScroll);
-
-// Pause auto-scroll when user interacts with navigation
-prevButton.addEventListener('mouseenter', stopAutoScroll);
-prevButton.addEventListener('mouseleave', startAutoScroll);
-nextButton.addEventListener('mouseenter', stopAutoScroll);
-nextButton.addEventListener('mouseleave', startAutoScroll);
-dotsContainer.addEventListener('mouseenter', stopAutoScroll);
-dotsContainer.addEventListener('mouseleave', startAutoScroll);
+testimonialTrack.addEventListener('mouseleave', () => {
+    if (isAutoScrolling) {
+        startAutoScroll();
+    }
+});
