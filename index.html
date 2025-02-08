@@ -40,7 +40,7 @@
             </video>
             <div class="container">
                 <h1>Reclaim What's Rightfully Yours After A Foreclosure</h1>
-                <p class="subheadline">We help you recover surplus funds from your foreclosed property with ease and confidence.</p>
+                <h2 class="subheadline">We help you recover surplus funds from your foreclosed property with ease and confidence.</h2>
                 <a href="#contact" class="cta-button">Get Your Funds Back Now</a>
             </div>
         </section>
@@ -182,6 +182,9 @@
                 </div>
 
                 <div class="carousel-dots" role="tablist" aria-label="Testimonial slides">
+                    <button class="dot active" role="tab" aria-selected="true" aria-label="Slide 1 of 3"></button>
+                    <button class="dot" role="tab" aria-selected="false" aria-label="Slide 2 of 3"></button>
+                    <button class="dot" role="tab" aria-selected="false" aria-label="Slide 3 of 3"></button>
                 </div>
             </div>
         </section>
@@ -192,31 +195,31 @@
                 <h2>Frequently Asked Questions</h2>
                 <div class="faq-container">
                     <details class="faq-item">
-                        <summary class="faq-question">Is this a scam?</summary>
-                        <div class="faq-answer">
+                        <summary class="faq-question" role="button" aria-expanded="false" aria-controls="faq-1">Is this a scam?</summary>
+                        <div id="faq-1" class="faq-answer">
                             <p>No, TrueClaim Services is a legitimate, licensed company. We operate under strict legal guidelines and maintain complete transparency throughout the process. Our success stories and professional credentials speak to our authenticity.</p>
                         </div>
                     </details>
                     <details class="faq-item">
-                        <summary class="faq-question">How much will this cost me?</summary>
-                        <div class="faq-answer">
+                        <summary class="faq-question" role="button" aria-expanded="false" aria-controls="faq-2">How much will this cost me?</summary>
+                        <div id="faq-2" class="faq-answer">
                             <p>We work on a contingency fee basis - meaning you don't pay unless we successfully recover your funds. Our fee is a percentage of the recovered amount, which will be clearly explained during our initial consultation.</p>
                         </div>
                     </details>
                     <details class="faq-item">
-                        <summary class="faq-question">How long does the process take?</summary>
-                        <div class="faq-answer">
+                        <summary class="faq-question" role="button" aria-expanded="false" aria-controls="faq-3">How long does the process take?</summary>
+                        <div id="faq-3" class="faq-answer">
                             <p>The timeline varies depending on your specific case and jurisdiction. Typically, the process takes 2-4 months. We'll provide you with a more accurate timeline during our initial consultation based on your specific situation.</p>
                         </div>
                     </details>
                     <details class="faq-item">
-                        <summary class="faq-question">What makes TrueClaim Services legitimate?</summary>
-                        <div class="faq-answer">
+                        <summary class="faq-question" role="button" aria-expanded="false" aria-controls="faq-4">What makes TrueClaim Services legitimate?</summary>
+                        <div id="faq-4" class="faq-answer">
                             <p>TrueClaim Services is a fully licensed and bonded company with the following credentials:</p>
                             <ul>
                                 <li>State License Number: FL-12345, CA-67890 (and other states)</li>
                                 <li>BBB Accredited Business since 2010 with A+ Rating</li>
-                                <li>Member of the National Association of Foreclosure Specialists</li>
+                                <li>Member: National Association of Foreclosure Specialists</li>
                                 <li>$2M Professional Liability Insurance</li>
                                 <li>Strict adherence to all state and federal regulations</li>
                             </ul>
@@ -224,20 +227,20 @@
                         </div>
                     </details>
                     <details class="faq-item">
-                        <summary class="faq-question">What if I don't know I have unclaimed funds?</summary>
-                        <div class="faq-answer">
+                        <summary class="faq-question" role="button" aria-expanded="false" aria-controls="faq-5">What if I don't know I have unclaimed funds?</summary>
+                        <div id="faq-5" class="faq-answer">
                             <p>Many people are unaware of the surplus funds available to them after a foreclosure. We specialize in identifying and recovering these funds on your behalf.</p>
                         </div>
                     </details>
                     <details class="faq-item">
-                        <summary class="faq-question">How long does it take to recover my funds?</summary>
-                        <div class="faq-answer">
+                        <summary class="faq-question" role="button" aria-expanded="false" aria-controls="faq-6">How long does it take to recover my funds?</summary>
+                        <div id="faq-6" class="faq-answer">
                             <p>The recovery timeline varies depending on the state and the complexity of the case. We strive to expedite the process as much as possible and keep you informed every step of the way.</p>
                         </div>
                     </details>
                     <details class="faq-item">
-                        <summary class="faq-question">What are your fees?</summary>
-                        <div class="faq-answer">
+                        <summary class="faq-question" role="button" aria-expanded="false" aria-controls="faq-7">What are your fees?</summary>
+                        <div id="faq-7" class="faq-answer">
                             <p>Our fees are contingency-based, meaning you only pay if we successfully recover funds for you. We operate with complete transparency and will clearly outline our fee structure upfront.</p>
                         </div>
                     </details>
@@ -310,8 +313,8 @@
                 <div class="footer-section">
                     <h3>Legal</h3>
                     <ul>
-                        <li><a href="/privacy-policy">Privacy Policy</a></li>
-                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/privacy-policy" aria-label="Read our Privacy Policy">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service" aria-label="Read our Terms of Service">Terms of Service</a></li>
                         <li><a href="/licenses">Licensing Information</a></li>
                         <li><a href="/compliance">Regulatory Compliance</a></li>
                     </ul>
@@ -320,8 +323,8 @@
             <div class="footer-bottom">
                 <p>&copy; 2025 TrueClaim Services. All rights reserved.</p>
                 <div class="legal-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
+                    <a href="/privacy-policy" aria-label="Read our Privacy Policy">Privacy Policy</a>
+                    <a href="/terms-of-service" aria-label="Read our Terms of Service">Terms of Service</a>
                 </div>
             </div>
         </div>
