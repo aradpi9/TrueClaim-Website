@@ -3,22 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const widget = document.getElementById('accessibility-widget');
     const toggle = document.getElementById('accessibility-toggle');
     const menu = document.getElementById('accessibility-menu');
-    const closeBtn = menu.querySelector('.close-menu');
-    
-    // Store initial font size
-    const initialFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-    let currentFontSize = initialFontSize;
     
     // Toggle menu
     toggle.addEventListener('click', () => {
         const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
         toggle.setAttribute('aria-expanded', !isExpanded);
         menu.hidden = isExpanded;
-    });
-    
-    closeBtn.addEventListener('click', () => {
-        toggle.setAttribute('aria-expanded', 'false');
-        menu.hidden = true;
     });
     
     // Handle clicks outside the menu
@@ -28,90 +18,148 @@ document.addEventListener('DOMContentLoaded', function() {
             menu.hidden = true;
         }
     });
-    
-    // Text size controls
-    document.querySelector('[data-action="increase-text"]').addEventListener('click', () => {
-        currentFontSize = Math.min(currentFontSize + 2, initialFontSize * 1.5);
-        document.documentElement.style.fontSize = `${currentFontSize}px`;
+
+    // Action buttons
+    document.querySelector('[data-action="reset"]').addEventListener('click', resetSettings);
+    document.querySelector('[data-action="hide"]').addEventListener('click', () => {
+        menu.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
     });
-    
-    document.querySelector('[data-action="decrease-text"]').addEventListener('click', () => {
-        currentFontSize = Math.max(currentFontSize - 2, initialFontSize * 0.75);
-        document.documentElement.style.fontSize = `${currentFontSize}px`;
-    });
-    
-    document.querySelector('[data-action="reset-text"]').addEventListener('click', () => {
-        currentFontSize = initialFontSize;
-        document.documentElement.style.fontSize = `${initialFontSize}px`;
-    });
-    
-    // Toggle buttons
-    const toggleButtons = document.querySelectorAll('.toggle-btn');
-    toggleButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const action = btn.dataset.action;
-            const isPressed = btn.getAttribute('aria-pressed') === 'true';
-            
-            btn.setAttribute('aria-pressed', !isPressed);
-            
-            switch(action) {
-                case 'high-contrast':
-                    document.body.classList.toggle('high-contrast');
-                    break;
-                case 'highlight-links':
-                    document.body.classList.toggle('highlight-links');
-                    break;
-                case 'dyslexia-font':
-                    document.body.classList.toggle('dyslexia-font');
-                    // Load OpenDyslexic font if not already loaded
-                    if (!isPressed) {
-                        const fontLink = document.createElement('link');
-                        fontLink.href = 'https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/open-dyslexic.min.css';
-                        fontLink.rel = 'stylesheet';
-                        document.head.appendChild(fontLink);
+
+    // Profile handlers
+    const profiles = {
+        'seizure-safe': {
+            apply: () => {
+                document.body.classList.toggle('seizure-safe');
+                // Remove flashing elements, reduce animations
+                document.querySelectorAll('*').forEach(el => {
+                    if (window.getComputedStyle(el).animation !== 'none') {
+                        el.style.animation = 'none';
                     }
-                    break;
-                case 'focus-mode':
-                    document.body.classList.toggle('focus-mode');
-                    break;
+                });
             }
-            
-            // Save preferences to localStorage
-            localStorage.setItem(`a11y_${action}`, !isPressed);
+        },
+        'vision-impaired': {
+            apply: () => {
+                document.body.classList.toggle('vision-impaired');
+                // Increase contrast and font size
+                document.documentElement.style.fontSize = 
+                    document.body.classList.contains('vision-impaired') ? '120%' : '';
+            }
+        },
+        'adhd-friendly': {
+            apply: () => {
+                document.body.classList.toggle('adhd-friendly');
+                // Reduce distractions
+                document.querySelectorAll('video, .carousel').forEach(el => {
+                    el.style.display = document.body.classList.contains('adhd-friendly') ? 'none' : '';
+                });
+            }
+        },
+        'cognitive-disability': {
+            apply: () => {
+                document.body.classList.toggle('cognitive-disability');
+                // Simplify content and increase readability
+                if (document.body.classList.contains('cognitive-disability')) {
+                    document.body.style.lineHeight = '1.8';
+                    document.body.style.wordSpacing = '0.16em';
+                    document.body.style.letterSpacing = '0.12em';
+                } else {
+                    document.body.style.lineHeight = '';
+                    document.body.style.wordSpacing = '';
+                    document.body.style.letterSpacing = '';
+                }
+            }
+        },
+        'keyboard-navigation': {
+            apply: () => {
+                document.body.classList.toggle('keyboard-navigation');
+                // Enhance focus indicators
+                if (document.body.classList.contains('keyboard-navigation')) {
+                    const style = document.createElement('style');
+                    style.id = 'keyboard-nav-styles';
+                    style.textContent = `
+                        *:focus {
+                            outline: 3px solid var(--primary-color) !important;
+                            outline-offset: 3px !important;
+                        }
+                    `;
+                    document.head.appendChild(style);
+                } else {
+                    document.getElementById('keyboard-nav-styles')?.remove();
+                }
+            }
+        },
+        'blind-users': {
+            apply: () => {
+                document.body.classList.toggle('blind-users');
+                // Optimize for screen readers
+                document.querySelectorAll('img').forEach(img => {
+                    if (!img.alt) img.alt = img.src.split('/').pop() || 'Image';
+                });
+                document.querySelectorAll('a').forEach(link => {
+                    if (!link.getAttribute('aria-label')) {
+                        link.setAttribute('aria-label', link.textContent);
+                    }
+                });
+            }
+        }
+    };
+
+    // Handle profile toggles
+    document.querySelectorAll('[data-profile]').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+            const profile = e.target.dataset.profile;
+            if (profiles[profile]) {
+                profiles[profile].apply();
+                // Save to localStorage
+                localStorage.setItem(`a11y_${profile}`, e.target.checked);
+            }
         });
     });
-    
+
     // Load saved preferences
-    const loadSavedPreferences = () => {
-        const actions = ['high-contrast', 'highlight-links', 'dyslexia-font', 'focus-mode'];
-        actions.forEach(action => {
-            const isEnabled = localStorage.getItem(`a11y_${action}`) === 'true';
+    function loadSavedPreferences() {
+        Object.keys(profiles).forEach(profile => {
+            const isEnabled = localStorage.getItem(`a11y_${profile}`) === 'true';
             if (isEnabled) {
-                const btn = document.querySelector(`[data-action="${action}"]`);
-                btn.setAttribute('aria-pressed', 'true');
-                
-                switch(action) {
-                    case 'high-contrast':
-                        document.body.classList.add('high-contrast');
-                        break;
-                    case 'highlight-links':
-                        document.body.classList.add('highlight-links');
-                        break;
-                    case 'dyslexia-font':
-                        document.body.classList.add('dyslexia-font');
-                        const fontLink = document.createElement('link');
-                        fontLink.href = 'https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/open-dyslexic.min.css';
-                        fontLink.rel = 'stylesheet';
-                        document.head.appendChild(fontLink);
-                        break;
-                    case 'focus-mode':
-                        document.body.classList.add('focus-mode');
-                        break;
+                const checkbox = document.querySelector(`[data-profile="${profile}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                    profiles[profile].apply();
                 }
             }
         });
-    };
-    
+    }
+
+    // Reset all settings
+    function resetSettings() {
+        document.querySelectorAll('[data-profile]').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        Object.keys(profiles).forEach(profile => {
+            if (document.body.classList.contains(profile)) {
+                profiles[profile].apply();
+            }
+            localStorage.removeItem(`a11y_${profile}`);
+        });
+        document.documentElement.style.fontSize = '';
+        document.body.style.lineHeight = '';
+        document.body.style.wordSpacing = '';
+        document.body.style.letterSpacing = '';
+        document.getElementById('keyboard-nav-styles')?.remove();
+    }
+
+    // Search functionality
+    const searchInput = document.querySelector('.accessibility-search input');
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        document.querySelectorAll('.profile-item').forEach(item => {
+            const content = item.textContent.toLowerCase();
+            item.style.display = content.includes(searchTerm) ? '' : 'none';
+        });
+    });
+
     // Load saved preferences on page load
     loadSavedPreferences();
 });

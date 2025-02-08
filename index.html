@@ -327,43 +327,119 @@
     </footer>
 
     <div id="accessibility-widget" class="accessibility-widget" role="region" aria-label="Accessibility controls">
-        <button id="accessibility-toggle" class="accessibility-toggle" aria-expanded="false" aria-label="Open accessibility menu">
-            <i class="fas fa-universal-access" aria-hidden="true"></i>
-            <span class="sr-only">Accessibility</span>
-        </button>
         <div id="accessibility-menu" class="accessibility-menu" hidden>
-            <div class="accessibility-menu-header">
-                <h3>Accessibility Options</h3>
-                <button class="close-menu" aria-label="Close accessibility menu">
-                    <i class="fas fa-times" aria-hidden="true"></i>
-                </button>
-            </div>
-            <div class="accessibility-options">
-                <div class="option-group">
-                    <h4>Text Size</h4>
-                    <div class="button-group">
-                        <button class="a11y-btn" data-action="decrease-text" aria-label="Decrease text size">A-</button>
-                        <button class="a11y-btn" data-action="reset-text" aria-label="Reset text size">Reset</button>
-                        <button class="a11y-btn" data-action="increase-text" aria-label="Increase text size">A+</button>
-                    </div>
+            <div class="accessibility-header">
+                <h3>Accessibility Adjustments</h3>
+                <div class="accessibility-actions">
+                    <button class="a11y-action-btn" data-action="reset" aria-label="Reset Settings">
+                        <i class="fas fa-undo"></i> Reset Settings
+                    </button>
+                    <button class="a11y-action-btn" data-action="statement" aria-label="Statement">
+                        <i class="fas fa-file-alt"></i> Statement
+                    </button>
+                    <button class="a11y-action-btn" data-action="hide" aria-label="Hide Interface">
+                        <i class="fas fa-times"></i> Hide Interface
+                    </button>
                 </div>
-                <div class="option-group">
-                    <h4>Display Options</h4>
-                    <button class="a11y-btn toggle-btn" data-action="high-contrast" aria-pressed="false">
-                        High Contrast
-                    </button>
-                    <button class="a11y-btn toggle-btn" data-action="highlight-links" aria-pressed="false">
-                        Highlight Links
-                    </button>
-                    <button class="a11y-btn toggle-btn" data-action="dyslexia-font" aria-pressed="false">
-                        Dyslexia Friendly
-                    </button>
-                    <button class="a11y-btn toggle-btn" data-action="focus-mode" aria-pressed="false">
-                        Focus Mode
-                    </button>
+            </div>
+
+            <div class="accessibility-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Unclear content? Search in dictionary..." aria-label="Search accessibility features">
+            </div>
+
+            <div class="accessibility-profiles">
+                <h4>Choose the right accessibility profile for you</h4>
+                
+                <div class="profile-item">
+                    <div class="profile-switch">
+                        <label class="switch">
+                            <input type="checkbox" data-profile="seizure-safe">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="profile-content">
+                        <h5>Seizure Safe Profile</h5>
+                        <p>Clear flashes & reduces color</p>
+                    </div>
+                    <i class="fas fa-bolt profile-icon"></i>
+                </div>
+
+                <div class="profile-item">
+                    <div class="profile-switch">
+                        <label class="switch">
+                            <input type="checkbox" data-profile="vision-impaired">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="profile-content">
+                        <h5>Vision Impaired Profile</h5>
+                        <p>Enhances website's visuals</p>
+                    </div>
+                    <i class="fas fa-eye profile-icon"></i>
+                </div>
+
+                <div class="profile-item">
+                    <div class="profile-switch">
+                        <label class="switch">
+                            <input type="checkbox" data-profile="adhd-friendly">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="profile-content">
+                        <h5>ADHD Friendly Profile</h5>
+                        <p>More focus & fewer distractions</p>
+                    </div>
+                    <i class="fas fa-brain profile-icon"></i>
+                </div>
+
+                <div class="profile-item">
+                    <div class="profile-switch">
+                        <label class="switch">
+                            <input type="checkbox" data-profile="cognitive-disability">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="profile-content">
+                        <h5>Cognitive Disability Profile</h5>
+                        <p>Assists with reading & focusing</p>
+                    </div>
+                    <i class="fas fa-cog profile-icon"></i>
+                </div>
+
+                <div class="profile-item">
+                    <div class="profile-switch">
+                        <label class="switch">
+                            <input type="checkbox" data-profile="keyboard-navigation">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="profile-content">
+                        <h5>Keyboard Navigation (Motor)</h5>
+                        <p>Use website with the keyboard</p>
+                    </div>
+                    <i class="fas fa-keyboard profile-icon"></i>
+                </div>
+
+                <div class="profile-item">
+                    <div class="profile-switch">
+                        <label class="switch">
+                            <input type="checkbox" data-profile="blind-users">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="profile-content">
+                        <h5>Blind Users (Screen Reader)</h5>
+                        <p>Optimize website for screen-readers</p>
+                    </div>
+                    <i class="fas fa-audio-description profile-icon"></i>
                 </div>
             </div>
         </div>
+        
+        <button id="accessibility-toggle" class="accessibility-toggle" aria-expanded="false" aria-label="Open accessibility menu">
+            <i class="fas fa-universal-access"></i>
+        </button>
     </div>
 
     <script src="script.js"></script>
