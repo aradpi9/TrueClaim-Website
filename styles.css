@@ -220,22 +220,71 @@ h1, h2, h3 {
 
 .testimonial-carousel {
     position: relative;
-    display: flex;
-    align-items: center;
-    margin: 2rem auto;
-    max-width: 900px;
+    overflow: hidden;
+    padding: 0 40px;
 }
 
 .testimonial-slider {
-    width: 100%;
     overflow: hidden;
-    position: relative;
-    padding: 1rem 0;
 }
 
 .testimonial-track {
     display: flex;
-    transition: transform 0.5s ease;
+    transition: transform 0.3s ease;
+}
+
+.testimonial {
+    flex: 0 0 calc(50% - 20px); /* Show 2 testimonials at a time with gap */
+    margin: 0 10px;
+    position: relative;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.carousel-arrow.prev {
+    left: 0;
+}
+
+.carousel-arrow.next {
+    right: 0;
+}
+
+.carousel-arrow:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--light-bg);
+    border: 2px solid var(--primary-color);
+    padding: 0;
+    cursor: pointer;
+}
+
+.dot.active {
+    background: var(--primary-color);
 }
 
 .testimonial {
@@ -254,62 +303,6 @@ h1, h2, h3 {
 .testimonial:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-.carousel-arrow {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 2;
-    padding: 0;
-    font-size: 1.2rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.carousel-arrow:hover {
-    background: var(--secondary-color);
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-
-.carousel-arrow:active {
-    transform: scale(0.95);
-}
-
-.carousel-arrow.prev {
-    margin-right: 1rem;
-}
-
-.carousel-arrow.next {
-    margin-left: 1rem;
-}
-
-.carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 1rem;
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #cbd5e0;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.dot.active {
-    background: var(--primary-color);
 }
 
 .stars {
@@ -505,6 +498,43 @@ h1, h2, h3 {
 
 .legal-info p {
     margin: 0.25rem 0;
+}
+
+/* Accessibility Styles */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus Styles */
+a:focus,
+button:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* Keyboard Navigation */
+.carousel-arrow:focus,
+.dot:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (forced-colors: active) {
+    .carousel-arrow,
+    .dot,
+    .cta-button,
+    .submit-button {
+        border: 2px solid currentColor;
+    }
 }
 
 /* Footer */
