@@ -181,11 +181,7 @@
                     </button>
                 </div>
 
-                <div class="carousel-dots" role="tablist" aria-label="Testimonial slides">
-                    <button class="dot active" role="tab" aria-selected="true" aria-label="Slide 1 of 3"></button>
-                    <button class="dot" role="tab" aria-selected="false" aria-label="Slide 2 of 3"></button>
-                    <button class="dot" role="tab" aria-selected="false" aria-label="Slide 3 of 3"></button>
-                </div>
+                <div class="carousel-dots" role="tablist" aria-label="Testimonial slides"></div>
             </div>
         </section>
 
@@ -330,6 +326,47 @@
         </div>
     </footer>
 
+    <div id="accessibility-widget" class="accessibility-widget" role="region" aria-label="Accessibility controls">
+        <button id="accessibility-toggle" class="accessibility-toggle" aria-expanded="false" aria-label="Open accessibility menu">
+            <i class="fas fa-universal-access" aria-hidden="true"></i>
+            <span class="sr-only">Accessibility</span>
+        </button>
+        <div id="accessibility-menu" class="accessibility-menu" hidden>
+            <div class="accessibility-menu-header">
+                <h3>Accessibility Options</h3>
+                <button class="close-menu" aria-label="Close accessibility menu">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="accessibility-options">
+                <div class="option-group">
+                    <h4>Text Size</h4>
+                    <div class="button-group">
+                        <button class="a11y-btn" data-action="decrease-text" aria-label="Decrease text size">A-</button>
+                        <button class="a11y-btn" data-action="reset-text" aria-label="Reset text size">Reset</button>
+                        <button class="a11y-btn" data-action="increase-text" aria-label="Increase text size">A+</button>
+                    </div>
+                </div>
+                <div class="option-group">
+                    <h4>Display Options</h4>
+                    <button class="a11y-btn toggle-btn" data-action="high-contrast" aria-pressed="false">
+                        High Contrast
+                    </button>
+                    <button class="a11y-btn toggle-btn" data-action="highlight-links" aria-pressed="false">
+                        Highlight Links
+                    </button>
+                    <button class="a11y-btn toggle-btn" data-action="dyslexia-font" aria-pressed="false">
+                        Dyslexia Friendly
+                    </button>
+                    <button class="a11y-btn toggle-btn" data-action="focus-mode" aria-pressed="false">
+                        Focus Mode
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    <script src="accessibility.js"></script>
 </body>
 </html>

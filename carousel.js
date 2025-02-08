@@ -7,17 +7,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const nextButton = carousel.querySelector('.next');
     const dotsNav = carousel.querySelector('.carousel-dots');
     
+    // Clear existing dots
+    dotsNav.innerHTML = '';
+    
     let currentSlide = 0;
     const slidesPerView = 2;
     const totalSlides = Math.ceil(slides.length / slidesPerView);
 
-    // Generate dots
-    for (let i = 0; i < totalSlides; i++) {
+    // Generate exactly 3 dots
+    for (let i = 0; i < 3; i++) {
         const dot = document.createElement('button');
         dot.className = 'dot' + (i === 0 ? ' active' : '');
         dot.setAttribute('role', 'tab');
         dot.setAttribute('aria-selected', i === 0);
-        dot.setAttribute('aria-label', `Slide ${i + 1} of ${totalSlides}`);
+        dot.setAttribute('aria-label', `Slide ${i + 1} of 3`);
         dotsNav.appendChild(dot);
     }
 

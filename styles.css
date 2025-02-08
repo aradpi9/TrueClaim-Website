@@ -269,7 +269,7 @@ h1, h2, h3 {
 .carousel-dots {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     margin-top: 20px;
 }
 
@@ -277,14 +277,24 @@ h1, h2, h3 {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: var(--light-bg);
-    border: 2px solid var(--primary-color);
+    background: #cbd5e0;
+    border: none;
     padding: 0;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .dot.active {
     background: var(--primary-color);
+}
+
+.dot:hover {
+    background: var(--secondary-color);
+}
+
+.dot:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 .testimonial {
@@ -498,6 +508,161 @@ h1, h2, h3 {
 
 .legal-info p {
     margin: 0.25rem 0;
+}
+
+/* Accessibility Widget */
+.accessibility-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.accessibility-toggle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #2c3e50;
+    border: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.accessibility-toggle:hover {
+    background: #34495e;
+    transform: scale(1.05);
+}
+
+.accessibility-toggle i {
+    font-size: 24px;
+}
+
+.accessibility-menu {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    width: 300px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.accessibility-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.accessibility-menu-header h3 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.close-menu {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #7f8c8d;
+    padding: 5px;
+}
+
+.option-group {
+    margin-bottom: 20px;
+}
+
+.option-group h4 {
+    margin: 0 0 10px;
+    color: #2c3e50;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.a11y-btn {
+    background: #f5f6fa;
+    border: 1px solid #dcdde1;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.a11y-btn:hover {
+    background: #dcdde1;
+}
+
+.toggle-btn {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+    position: relative;
+    padding-right: 40px;
+}
+
+.toggle-btn[aria-pressed="true"] {
+    background: #2ecc71;
+    color: white;
+    border-color: #27ae60;
+}
+
+/* Accessibility Classes */
+.high-contrast {
+    background: #000 !important;
+    color: #fff !important;
+}
+
+.high-contrast a {
+    color: #ffff00 !important;
+}
+
+.highlight-links a {
+    background: #ffeb3b !important;
+    color: #000 !important;
+    text-decoration: underline !important;
+}
+
+.dyslexia-font {
+    font-family: 'OpenDyslexic', sans-serif !important;
+    line-height: 1.6 !important;
+    letter-spacing: 0.2px !important;
+}
+
+.focus-mode * {
+    opacity: 0.5;
+}
+
+.focus-mode *:hover,
+.focus-mode *:focus {
+    opacity: 1;
+}
+
+/* Screen reader only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .accessibility-menu {
+        position: fixed;
+        bottom: 80px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+    }
 }
 
 /* Accessibility Styles */
