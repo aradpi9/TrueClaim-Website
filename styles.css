@@ -1,7 +1,7 @@
 /* Global Styles */
 :root {
     --primary-color: #2c5282;
-    --secondary-color: #4299e1;
+    --secondary-color: #007bff;
     --accent-color: #48bb78;
     --text-color: #2d3748;
     --light-bg: #f7fafc;
@@ -313,7 +313,7 @@ h1, h2, h3 {
 }
 
 .stars {
-    color: #f6e05e;
+    color: #ffc107;
     margin-bottom: 1rem;
     font-size: 1.2rem;
 }
